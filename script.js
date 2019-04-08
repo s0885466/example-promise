@@ -2,6 +2,7 @@
 /*Пример использования промесов
 *
 * getDataFromBD() - функция запускающая цепочку промесов
+* выполнена передача данных через resolve(users) в следующий promise в виде usersList
 * */
 
 function getDataFromBD(){
@@ -11,7 +12,7 @@ function getDataFromBD(){
         setTimeout(function () {
             console.log('Сервер: запрашиваю список пользователей в БД');
             console.log('...');
-            Math.random() < 0.8 ? resolve(): reject('не удалость получить данные из БД');
+            Math.random() < 0.9 ? resolve(): reject('не удалость получить данные из БД');
         }, 1000);
 
     });
@@ -25,7 +26,7 @@ getDataFromBD().then(function () {
         setTimeout(function () {
             console.log('БД: формирую список пользователей');
             console.log('...');
-            Math.random() < 0.8 ? resolve(): reject('Ошибка формирования списка пользователей');
+            Math.random() < 0.9 ? resolve(): reject('Ошибка формирования списка пользователей');
         }, 1000)
     });
 })
@@ -33,19 +34,23 @@ getDataFromBD().then(function () {
 
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
+
+                let users = ['иван', 'петр', 'григорий'];
+
                 console.log('Сервер: запрашиваю список пользователей в БД');
                 console.log('...');
-                Math.random() < 0.8 ? resolve(): reject('Ошибка запроса пользователей из БД');
+                Math.random() < 0.9 ? resolve(users): reject('Ошибка запроса пользователей из БД');
             }, 1000);
         });
 
     })
-    .then(function () {
+    .then(function (usersList) {
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
+                console.log('Получен следующий список пользователей ' + usersList.join(';'));
                 console.log('трансформирую данные для клиента');
                 console.log('...');
-                Math.random() < 0.8 ? resolve(): reject('Ошибка трансформации данных для клиента');
+                Math.random() < 0.9 ? resolve(): reject('Ошибка трансформации данных для клиента');
             }, 1000);
         });
     })
@@ -54,7 +59,7 @@ getDataFromBD().then(function () {
             setTimeout(function () {
                 console.log('Клиент получает данные');
                 console.log('...');
-                Math.random() < 0.8 ? resolve(): reject('Ошибка получения данных для клиента');
+                Math.random() < 0.9 ? resolve(): reject('Ошибка получения данных для клиента');
             }, 1000);
         });
     })
